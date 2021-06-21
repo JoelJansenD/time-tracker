@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import Interval, { getRuntimeString } from '../model/Interval';
+import './style/IntervalComponent.scss';
 
 interface IntervalComponentProps {
     interval: Interval;
