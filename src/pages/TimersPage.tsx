@@ -3,6 +3,7 @@ import Interval from "../model/Interval";
 import Timer from "../model/Timer";
 import { v4 as uuidv4 } from 'uuid';
 import { Fragment, useState } from "react";
+import "./style/TimersPage.scss";
 
 const TimersPage = () => {
 
@@ -15,7 +16,19 @@ const TimersPage = () => {
                     name: "Interval 2",
                     runtime: { hours: 0, minutes: 0, seconds: 5 },
                     message: "Interval 2 completed",
-                    id: uuidv4()
+                    id: uuidv4(),
+                    next: {
+                        name: "Interval 3",
+                        runtime: { hours: 0, minutes: 0, seconds: 5 },
+                        message: "Interval 2 completed",
+                        id: uuidv4(),
+                        next: {
+                            name: "Interval 4",
+                            runtime: { hours: 0, minutes: 0, seconds: 5 },
+                            message: "Interval 2 completed",
+                            id: uuidv4()
+                        },
+                    },
                 },
                 runtime: { hours: 0, minutes: 0, seconds: 5 },
                 message: "Interval 1 completed",
@@ -26,8 +39,6 @@ const TimersPage = () => {
         }
     ]);
 
-    console.log(timers);
-
     const timerChanged = (timer: Timer) => {
         const index = timers.findIndex(t => t.id === timer.id);
         const newTimers = [...timers];
@@ -35,12 +46,19 @@ const TimersPage = () => {
         setTimers(newTimers);
     }
 
+    const timerDeleted = (timer: Timer) => {
+        const index = timers.findIndex(t => t.id === timer.id);
+        const newTimers = [...timers];
+        newTimers.splice(index, 1);
+        setTimers(newTimers);
+    }
+
     return (
-        <Fragment>
-            {timers.map((timer, index) => (
-                <TimerComponent timer={timer} timerChanged={timerChanged} key={index} />
+        <div className="timers">
+            {[0, 1, 2, 3, 4].map((timer, index) => (
+                <div className="timer" key={index}><TimerComponent timer={timers[0]} timerChanged={timerChanged} timerDeleted={timerDeleted} /></div>
             ))}
-        </Fragment>
+        </div>
     )
 }
 
